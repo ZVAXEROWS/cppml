@@ -1,4 +1,4 @@
-markdown_content = """# CPPML: High-Performance Machine Learning CLI in C++
+# CPPML: High-Performance Machine Learning CLI in C++
 
 A lightweight, zero-dependency, high-performance Machine Learning Command Line Interface (CLI) built entirely from scratch in C++. This framework implements Linear and Polynomial Regression pipelines using matrix mathematics and gradient descent optimization, tailored for structured numerical datasets.
 
@@ -8,24 +8,29 @@ A lightweight, zero-dependency, high-performance Machine Learning Command Line I
 
 The framework uses an objective-oriented architecture decoupling data ingestion, matrix mathematics, algorithmic models, and statistical evaluation metrics.
 
+## Project Structure
+```
 📁 cppml/
 │
-├── 📁 include/cppml/            # Header Definitions
-│   ├── Dataset.hpp              # Ingestion, cleansing, and Z-score standardization
-│   ├── Matrix.hpp               # Custom linear algebra engine (dot products, transpositions)
-│   ├── Model.hpp                # Virtual base class for machine learning implementations
-│   ├── LinearRegression.hpp     # Multivariate Linear Regression engine
-│   ├── PolynomialRegression.hpp # Polynomial feature engineering & training loop
-│   └── Metrics.hpp              # Verification metrics (MSE, RMSE, MAE, R²)
+├── 📁 include/cppml/              # Header definitions
+│   ├── Dataset.hpp               # Data ingestion, cleaning, and Z-score normalization
+│   ├── Matrix.hpp                # Custom linear algebra engine (dot products, transpositions, etc.)
+│   ├── Model.hpp                 # Abstract base class for all ML models
+│   ├── LinearRegression.hpp     # Multivariate linear regression implementation
+│   ├── PolynomialRegression.hpp # Polynomial feature engineering and training pipeline
+│   └── Metrics.hpp              # Evaluation metrics (MSE, RMSE, MAE, R²)
 │
-├── 📁 src/                      # Source Implementations
-│   ├── Dataset.cpp              # CSV parses, missing data resolution, feature scaling
-│   ├── Matrix.cpp               # Vectorized mathematical row/column operations
-│   ├── LinearRegression.cpp     # Analytical gradient descent weight update cycles
-│   ├── PolynomialRegression.cpp # High-degree combinations transformations
-│   └── Metrics.cpp              # Statistical scoring computations
+├── 📁 src/                       # Source implementations
+│   ├── Dataset.cpp              # CSV parsing, missing data handling, feature scaling
+│   ├── Matrix.cpp               # Vectorized matrix operations (row/column computations)
+│   ├── LinearRegression.cpp     # Gradient descent / analytical solution implementation
+│   ├── PolynomialRegression.cpp # Polynomial feature transformation and training logic
+│   └── Metrics.cpp              # Statistical evaluation computations
 │
-└── 📄 Source.cpp                # Core application router and CLI orchestration
+└── 📄 Source.cpp                 # Main application entry point (CLI orchestration)
+```
+
+### Directory Layout
 
 ### Core Engine Mechanisms
 1. **Mathematical Stability**: Features are processed via a custom **Z-score Standardization Engine** inside `Dataset.cpp` translating raw inputs into standardized deviations ($x_{\text{scaled}} = \frac{x - \mu}{\sigma}$), preventing gradient explosions during matrix dot products.
