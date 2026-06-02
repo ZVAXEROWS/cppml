@@ -51,6 +51,8 @@ int main(int argc, char *argv[]) {
       return 1;
     }
 
+    dataset.cleanAndScale();
+
     std::cout << "Training on " << dataset.getX().rows() << " samples with "
               << dataset.getX().cols() << " features.\n";
 
@@ -119,6 +121,8 @@ int main(int argc, char *argv[]) {
     if (!dataset.loadCSV(dataset_path)) {
       return 1;
     }
+
+    dataset.cleanAndScale();
 
     try {
       if (poly_degree > 1) {

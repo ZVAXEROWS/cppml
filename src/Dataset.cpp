@@ -3,10 +3,57 @@
 #include <sstream>
 #include <vector>
 #include <iostream>
+#include <cmath>
 
 namespace cppml {
 
 Dataset::Dataset() {}
+
+void Dataset::cleanAndScale() {
+    int rows = X_.rows();
+    int cols = X_.cols();
+
+    feature_means.resize(cols, 0.0);
+    feature_stds.resize(cols, 0.0);
+
+    for (int j = 0; j < cols; ++j) {
+        // 1. Data Cleansing: Handle missing data / Compute Mean
+        double sum = 0.0;
+        int valid_count = 0;
+        for (int i = 0; i < rows; ++i) {
+            // Assuming 0.0 or NaN representation might be present
+            if (!std::isnan(X_(i, j))) {
+                sum += X_(i, j);
+                valid_count++;
+            }
+        }
+
+        double mean = (valid_count > 0) ? (sum / valid_count) : 0.0;
+        feature_means[j] = mean;
+
+        // Clean missing values by replacing them with the column mean
+        for (int i = 0; i < rows; ++i) {
+            if (std::isnan(X_(i, j))) {
+                X_(i, j) = mean;
+            }
+        }
+
+        // 2. Compute Standard Deviation
+        double variance_sum = 0.0;
+        for (int i = 0; i < rows; ++i) {
+            variance_sum += std::pow(X_(i, j) - mean, 2);
+        }
+        double std_dev = std::sqrt(variance_sum / rows);
+        if (std_dev == 0.0) std_dev = 1.0; // Prevent division by zero
+        feature_stds[j] = std_dev;
+
+        // 3. Apply Z-score Normalization
+        for (int i = 0; i < rows; ++i) {
+            X_(i, j) = (X_(i, j) - mean) / std_dev;
+        }
+    }
+    std::cout << "Data cleansing and Z-score optimization complete.\n";
+}
 
 bool Dataset::loadCSV(const std::string& filepath) {
     std::ifstream file(filepath);
