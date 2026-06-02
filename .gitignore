@@ -1,0 +1,18 @@
+# Visual Studio
+.vs/
+
+# Build folders
+Debug/
+Release/
+x64/
+x86/
+
+# Visual Studio files
+*.user
+*.suo
+
+# Generated files
+*.obj
+*.pdb
+*.ilk
+*.exe
