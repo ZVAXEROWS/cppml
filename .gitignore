@@ -16,3 +16,10 @@ x86/
 *.pdb
 *.ilk
 *.exe
+# Build artifacts
+cppml_cli
+cppml_cli.exe
+*.bin
+
+# IDE
+.idea/
